@@ -21,10 +21,11 @@ h1{
 
 h2{
     text-align: center;
+    color: #151B54;
 }
 
 h3{
-    color: #151B54;
+    color: #000000;
     font-size: 1.4em;
     font-weight: 300;
     max-width: 800px;
