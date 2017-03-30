@@ -1,72 +1,48 @@
-var MyFirstVariable = 20;
-var SecondVariable = 35;
-var MyName = "Maira";
-var AmIAmerican = false;
-var MyArray = [12,214,514]
-var MyObject = {name: "Maira", lastname: "Khan", age: 27}
-var MyGlobalVariable = "Global"
-var CircleSize = 50
+// ***** Global variables ***** //
+var apiKey = '1934a3cfafeecec67d0d0f3d1f2c6e3c';
+var baseURL = 'http://api.openweathermap.org/data/2.5/weather?q=';
+var city;
+var units = 'metric';
+var weatherData;
+var temperature = 0;
+var humidity = 0;
+var iconURL;
+var button;
 
-// function preload(){
 
-// }
-
-function MyFirstFunction (x1,x2,x3){
-	var x4 = x1*x2*x3;
-	var MyLocalVariable = "Local"
-	return x4;
-}
-
+// ***** Setup function ***** //
 function setup(){
-	console.log(MyFirstVariable);
-	print(MyFirstVariable);
-	var ThirdVariable = MyFirstVariable + SecondVariable
-	print(ThirdVariable);
-	var FourthVariable = MyFirstVariable + MyName
-	print(FourthVariable);
-	var FifthVariable = MyFirstVariable + SecondVariable + MyName
-	print(FifthVariable);
-	print(typeof(FifthVariable));
-	var SixthVariable =  MyName + MyFirstVariable + SecondVariable
-	print(SixthVariable);
-	print(MyArray[0]);
-	print(MyObject["name"]);
-	print(MyFirstFunction(2,3,6));
-	print(MyGlobalVariable);
+createCanvas(800,800);
+button = select("#submit");
+city = select("#city");
+button.mousePressed(queryAPI)
 }
 
+function queryAPI(){
+var query = baseURL + city.value() +'&apiKey=' + apiKey + '&units=' + units;
+loadJSON(query,getWeatherData);
+console.log('here we querried/ called the api and added the data to getWeatherData');
+}
+
+function getWeatherData(apiData){
+weatherData = apiData; 
+temperature = weatherData.main.temp;
+humidity = weatherData.main.humidity;
+iconURL = "http://openweathermap.org/img/w/" + weatherData.weather[0].icon + ".png";
+console.log(weatherData);
+}
+
+
+// ***** Draw function ***** //
 function draw(){
-	print(MyFirstVariable);
+    background(255)
+    fill(0);
+    noStroke();
+    if (weatherData){
+        ellipse(200,200, temperature * 10, temperature * 10);
+        loadImage(iconURL, function(img) {
+            image(img, 0, 0);
+        });
+    }
+    
 }
-
-
-
-
-function setup(){
-	createCanvas(1000,1000);
-
-	for(var i=0; i<100; i++){
-		print(i);
-
-	var i=0;
-	while (i<100){
-		var x=2;
-		print(i);
-		i++;	}
-}
-
-
-
-function draw(){
-	background(0, 100, 100);
-	if(mouseIsPressed){
-		fill(255)
-	}
-	else{
-		fill(0);
-	}
-	stroke(200, 0, 50);
-	strokeWeight(2);
-	ellipse(mouseX, mouseY, CircleSize, CircleSize);
-}
-
