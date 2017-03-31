@@ -34,7 +34,7 @@ button.mousePressed(queryAPI)
 function queryAPI(){
 var query = baseURL + city.value() +'&apiKey=' + apiKey + '&units=' + units;
 loadJSON(query,getWeatherData);
-console.log('here we querried/ called the api and added the data to getWeatherData');
+//console.log('here we querried/ called the api and added the data to getWeatherData');
 }
 
 function getWeatherData(apiData){
@@ -46,9 +46,11 @@ longitude = weatherData.coord.lon;
 temperature = weatherData.main.temp;
 minTemp = weatherData.main.temp_min;
 maxTemp = weatherData.main.temp_max;
+WDescription = weatherData.weather[0].description;
 humidity = weatherData.main.humidity;
 speed = weatherData.wind.speed;
 clouds = weatherData.clouds.all;
+windDeg = weatherData.wind.deg;
 
 
 
@@ -73,37 +75,50 @@ function drawGrid() {
 
 // Text size 1
 function drawText1() {
-	fill(0);
+	fill(255);
     noStroke();
-    textSize(35);
+    textSize(40);
 
     if (weatherData){
-        text(name, 100, 100);
+        text(name, 150, 100);
 	}
 }
 
 // Text size 2
 function drawText2() {
-	fill(0);
+	fill(255);
     noStroke();
-    textSize(25);
+    textSize(30);
 
     if (weatherData){
-        text(temperature + " °C ", 100, 190);
+        text(temperature + "\xB0" + " C ", 150, 190);
 	}
 }
 
 // Text size 3
 function drawText3() {
-	fill(0);
+	fill(255);
     noStroke();
     textSize(15);
 
     if (weatherData){
-       text("Country: " + country + " / Latitude: " + latitude + " / Longitude: " + longitude, 100, 125);
-       text("Minimum Temperature: " + minTemp + " / Maximum Temperature " + maxTemp, 100, 215);
-	}
+       text("Country: " + country + " / Latitude: " + latitude + " / Longitude: " + longitude, 150, 125);
+       text("Minimum Temperature: " + minTemp + " / Maximum Temperature " + maxTemp, 150, 215);
+       text(WDescription, 965, 215);
+	   }
 }
+
+// Text size 4
+//function drawText4() {
+    //fill(255);
+    //noStroke();
+    //textSize(20);
+     // if (weatherData){
+      //text("Celsius", 230, 190);
+      //text(WDescription, 965, 215);
+      // }   
+//}
+
 
 // Pie Chart Function
 function drawPie(x, y, width, height, value, maxValue, color) {
@@ -122,10 +137,10 @@ function drawPie(x, y, width, height, value, maxValue, color) {
     arc(x, y, width, height, -HALF_PI, -HALF_PI + (ratio * 2*PI), PIE);
     
     fill(255);
-    ellipse(x, y, width - 25, height - 25);
+    ellipse(x, y, width - 35, height - 35);
 
     fill('rgba(0,0,0,0.5)');
-    ellipse(x, y, width - 25, height - 25);
+    ellipse(x, y, width - 35, height - 35);
 }
 
 // Get severity values
@@ -153,7 +168,15 @@ function getSeverity(temperature) {
 function draw(){
 
 background(255)
-	//drawGrid()
+	drawGrid()
+
+    if (weatherData){
+        var severity = getSeverity(weatherData.main.temp);
+        var color = severityColors[severity];
+        fill(color.R, color.G, color.B);
+        rect(0, 0, 1400, 50);
+        rect(0, 550, 1400, 50);
+}
 
 fill('rgba(0,0,0,0.5)');
 	rect(0, 50, 1400, 500);
@@ -161,6 +184,7 @@ fill('rgba(0,0,0,0.5)');
 	drawText1()
 	drawText2()
 	drawText3()
+    //drawText4()
 
 	textSize(20);
    // background(255)
@@ -168,25 +192,27 @@ fill('rgba(0,0,0,0.5)');
     noStroke();
     if (weatherData){
        // ellipse(200,200, temperature * 10, temperature * 10);
-       // ellipse(400,200, humidity, humidity);
- 		var severity = getSeverity(weatherData.main.temp);
-        var color = severityColors[severity];
-		fill(color.R, color.G, color.B);
-        rect(0, 0, 1400, 50);
+       // ellipse(400,200, humidity, humidity);      
 
-        drawPie(200, 400, 200, 200, humidity, 100, {'R': 0, 'G': 255, 'B': 255});
+        drawPie(250, 390, 230, 230, humidity, 100, {'R': 0, 'G': 255, 'B': 255});
 
-        fill(0)
-        text(humidity + " % ", 190, 405);
-        text(speed + " % ", 400, 400);
-        text(clouds+ " % ", 500, 400);
+        drawPie(500, 390, 230, 230, speed, 100, {'R': 0, 'G': 255, 'B': 255});
+
+        drawPie(750, 390, 230, 230, windDeg, 360, {'R': 0, 'G': 255, 'B': 255});
+
+        fill(255)
+        text(humidity + " % ", 235, 405);
+        text(speed + " km/h ", 465, 405);
+        text(windDeg + " \xB0", 730, 405);
+        //text(clouds+ " % ", 500, 400);
 
         if (icon != null) {
         	icon.remove();
        	 }
         icon = createImg("http://openweathermap.org/img/w/" + weatherData.weather[0].icon + ".png");
-        icon.position(800, 200);
+       // icon.position(800, 200);
 
+        image(icon, 950, 90, icon.width*2.5, icon.height*2.5);
 
 
            // loadImage(iconURL, function(img) {
