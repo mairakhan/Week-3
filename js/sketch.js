@@ -118,12 +118,12 @@ function drawText4() {
       //text(WDescription, 965, 215);
         text("Humidity", 215, 590);
         text("Wind Speed", 445, 590);
-        text("Wind Direction", 710, 590);
+        text("Wind Direction", 685, 590);
         text("Clouds", 975, 590);
 
         text("in % ", 235, 615);
         text("in meter/s ", 455, 615);
-        text("in degrees", 725, 615);
+        text("in degrees", 705, 615);
         text("in % ", 990, 615);
 
         text(WDescription, 1015, 265);
@@ -193,7 +193,7 @@ image(img,0,0);
         rect(0, 0, 1400, 100);
         rect(0, 650, 1400, 100);
 
-        fill('rgba(0,0,0,0.7)');
+        fill('rgba(0,0,0,0.65)');
         rect(0, 100, 1400, 550);
 }
 
@@ -233,7 +233,7 @@ image(img,0,0);
         icon = createImg("http://openweathermap.org/img/w/" + weatherData.weather[0].icon + ".png");
        // icon.position(800, 200);
 
-        image(icon, 985, 140, icon.width*2.5, icon.height*2.5);
+        image(icon, 1000, 150, icon.width*2.5, icon.height*2.5);
 
 
            // loadImage(iconURL, function(img) {
