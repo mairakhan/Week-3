@@ -17,14 +17,15 @@ var SEVERITY_WARM = 2;
 var SEVERITY_HOT = 3;
 
 var severityColors = {};
-severityColors[SEVERITY_FREEZING] = {'R': 255, 'G': 255, 'B': 50};
-severityColors[SEVERITY_COLD] = {'R': 255, 'G': 255, 'B': 150};
-severityColors[SEVERITY_WARM] = {'R': 150, 'G': 255, 'B': 150};
-severityColors[SEVERITY_HOT] = {'R': 50, 'G': 255, 'B': 150};
+severityColors[SEVERITY_FREEZING] = {'R': 0, 'G': 0, 'B': 204};
+severityColors[SEVERITY_COLD] = {'R': 0, 'G': 204, 'B': 204};
+severityColors[SEVERITY_WARM] = {'R': 255, 'G': 255, 'B': 153};
+severityColors[SEVERITY_HOT] = {'R': 153, 'G': 0, 'B': 0};
 
 
 // ***** Setup function ***** //
 function setup(){
+
 createCanvas(1400,1200);
 button = select("#submit");
 city = select("#city");
@@ -80,7 +81,7 @@ function drawText1() {
     textSize(40);
 
     if (weatherData){
-        text(name, 150, 100);
+        text(name, 150, 150);
 	}
 }
 
@@ -91,7 +92,7 @@ function drawText2() {
     textSize(30);
 
     if (weatherData){
-        text(temperature + "\xB0" + " C ", 150, 190);
+        text(temperature + "\xB0" + " C ", 150, 240);
 	}
 }
 
@@ -102,22 +103,32 @@ function drawText3() {
     textSize(15);
 
     if (weatherData){
-       text("Country: " + country + " / Latitude: " + latitude + " / Longitude: " + longitude, 150, 125);
-       text("Minimum Temperature: " + minTemp + " / Maximum Temperature " + maxTemp, 150, 215);
-       text(WDescription, 965, 215);
-	   }
+       text("Country: " + country + " / Latitude: " + latitude + " / Longitude: " + longitude, 150, 175);
+       text("Minimum Temperature: " + minTemp + " / Maximum Temperature " + maxTemp, 150, 265);
+       	   }
 }
 
-// Text size 4
-//function drawText4() {
-    //fill(255);
-    //noStroke();
-    //textSize(20);
-     // if (weatherData){
+//Text size 4
+function drawText4() {
+    fill(255);
+    noStroke();
+    textSize(20);
+      if (weatherData){
       //text("Celsius", 230, 190);
       //text(WDescription, 965, 215);
-      // }   
-//}
+        text("Humidity", 215, 590);
+        text("Wind Speed", 445, 590);
+        text("Wind Direction", 710, 590);
+        text("Clouds", 975, 590);
+
+        text("in % ", 235, 615);
+        text("in meter/s ", 455, 615);
+        text("in degrees", 725, 615);
+        text("in % ", 990, 615);
+
+        text(WDescription, 1015, 265);
+      }   
+}
 
 
 // Pie Chart Function
@@ -137,10 +148,10 @@ function drawPie(x, y, width, height, value, maxValue, color) {
     arc(x, y, width, height, -HALF_PI, -HALF_PI + (ratio * 2*PI), PIE);
     
     fill(255);
-    ellipse(x, y, width - 35, height - 35);
+    ellipse(x, y, width - 30, height - 30);
 
     fill('rgba(0,0,0,0.5)');
-    ellipse(x, y, width - 35, height - 35);
+    ellipse(x, y, width - 30, height - 30);
 }
 
 // Get severity values
@@ -167,24 +178,31 @@ function getSeverity(temperature) {
 // ***** Draw function ***** //
 function draw(){
 
-background(255)
-	drawGrid()
+
+loadImage("../img/world_map.jpg", function(img){
+image(img,0,0);
+});
+
+//background(255)
+	//drawGrid()
 
     if (weatherData){
         var severity = getSeverity(weatherData.main.temp);
         var color = severityColors[severity];
         fill(color.R, color.G, color.B);
-        rect(0, 0, 1400, 50);
-        rect(0, 550, 1400, 50);
+        rect(0, 0, 1400, 100);
+        rect(0, 650, 1400, 100);
+
+        fill('rgba(0,0,0,0.7)');
+        rect(0, 100, 1400, 550);
 }
 
-fill('rgba(0,0,0,0.5)');
-	rect(0, 50, 1400, 500);
+
 
 	drawText1()
 	drawText2()
 	drawText3()
-    //drawText4()
+    drawText4()
 
 	textSize(20);
    // background(255)
@@ -194,17 +212,20 @@ fill('rgba(0,0,0,0.5)');
        // ellipse(200,200, temperature * 10, temperature * 10);
        // ellipse(400,200, humidity, humidity);      
 
-        drawPie(250, 390, 230, 230, humidity, 100, {'R': 0, 'G': 255, 'B': 255});
+        drawPie(250, 440, 230, 230, humidity, 100, {'R': 0, 'G': 0, 'B': 0});
 
-        drawPie(500, 390, 230, 230, speed, 100, {'R': 0, 'G': 255, 'B': 255});
+        drawPie(500, 440, 230, 230, speed, 100, {'R': 0, 'G': 0, 'B': 0});
 
-        drawPie(750, 390, 230, 230, windDeg, 360, {'R': 0, 'G': 255, 'B': 255});
+        drawPie(750, 440, 230, 230, windDeg, 360, {'R': 0, 'G': 0, 'B': 0});
+
+        drawPie(1000, 440, 230, 230, clouds, 360, {'R': 0, 'G': 0, 'B': 0});
 
         fill(255)
-        text(humidity + " % ", 235, 405);
-        text(speed + " km/h ", 465, 405);
-        text(windDeg + " \xB0", 730, 405);
-        //text(clouds+ " % ", 500, 400);
+        text(humidity , 235, 455);
+        text(speed, 485, 455);
+        text(windDeg + "\xB0", 710, 455);
+        text(clouds, 990, 455);
+        
 
         if (icon != null) {
         	icon.remove();
@@ -212,7 +233,7 @@ fill('rgba(0,0,0,0.5)');
         icon = createImg("http://openweathermap.org/img/w/" + weatherData.weather[0].icon + ".png");
        // icon.position(800, 200);
 
-        image(icon, 950, 90, icon.width*2.5, icon.height*2.5);
+        image(icon, 985, 140, icon.width*2.5, icon.height*2.5);
 
 
            // loadImage(iconURL, function(img) {

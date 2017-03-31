@@ -8,8 +8,8 @@ div.title{
 }
 
 h1{
-    color: #151B54;
-    font-weight: 500;
+    color: 0;
+    font-weight: 550;
     font-size: 2.75em;
     max-width: 800px;
     text-align: left;
@@ -21,20 +21,22 @@ h1{
 
 h2{
     text-align: left;
-    color: #151B54;
+    color: 0;
+
 }
 
 h3{
-    color: #000000;
     font-size: 1.4em;
     font-weight: 300;
     max-width: 800px;
-    text-align: center;
+    text-align: left;
     margin-top: 5px;
     margin-right: auto;
     margin-left: auto;
     margin-bottom: auto;
 }
+
+
 
 div.bio{
     max-width: 800px;
@@ -73,7 +75,7 @@ div.linkList{
 
 li.assignmentLink{
     font-weight: 300;
-    font-size: 1.28em;
+    font-size: 1.15em;
     line-height: 130%;
 }
 
@@ -84,3 +86,39 @@ li.assignmentLink > a{
 li.assignmentLink > a:hover{
     background-color: #FFFF00; 
 }
+
+img.bioImage2{
+    width: 75%;
+    margin: auto;
+    display: block;
+}
+
+img.bioImage3{
+    width: 100%;
+    margin: auto;
+    display: block;
+}
+
+img.bioImage4{
+    width: 65%;
+    margin: auto;
+    display: block;
+}
+
+img.bioImage5{
+    width: 80%;
+    margin: auto;
+    display: block;
+}
+
+h4{
+  font-size: 1.28em;
+    font-weight: 500;
+    max-width: 800px;
+    text-align: left;
+    margin-top: 5px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+}
+
